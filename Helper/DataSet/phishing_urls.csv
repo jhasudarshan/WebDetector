@@ -1,0 +1,87 @@
+url,label
+ajax.googleapis.com {Redirection + Other Issue},phishing
+maps.googleapis.com  {Redirection + Other Issue},phishing
+ec.europa.eu {Redirection of urls two times}.,phishing
+maxcdn.bootstrapcdn.com {Redirection},phishing
+s3.amazonaws.com {Not Support HTTPS connection},phishing
+i.imgur.com {Redirected to imgur.com},malware
+amazon.de {Not Secure},phishing
+platform.twitter.com {Access Denied},phishing
+telegraph.co.uk {Something is unsusual in console}.,phishing
+open.spotify.com {Can't able to inspect from browser,malware
+who.int {Not Supported secured https connection},phishing
+analytics.google.com {Redirection},malware
+download.macromedia.com {Not Supported secured https connection},phishing
+dailymail.co.uk {Not Supported secured https connection},phishing
+storage.googleapis.com {Authorization Requires},phishing
+support.mozilla.org {Redirection},malware
+amazon.co.uk {Unsafe attempt to load URL - Console Output},phishing
+amazon.co.jp {Don't Know},phishing
+blog.google {Don't Know},phishing
+helpx.adobe.com {Not Secure Https Connection},phishing
+google.de,phishing
+mailchi.mp,phishing
+googleblog.blogspot.com {Redirection},phishing
+aboutads.info {Not Secure Https Connection},phishing
+music.apple.com {Not Secure Https Connection},malware
+elmundo.es {Don;t Know},phishing
+dev.mysql.com {Don't Know},phishing
+productforums.google.com {Redirectio},malware
+amazon.es {Not Secure Https Connection},phishing
+azure.microsoft.com { Redirection },phishing
+raw.githubusercontent.com { Redirection },phishing
+login.microsoftonline.com { Redirection },phishing
+google.es {Not Secure Https Connection},phishing
+s3-eu-west-1.amazonaws.com { Redirection },phishing
+i.redd.it {Redirection},phishing
+spiegel.de {Not Secure Https Connection},phishing
+windows.microsoft.com {Not Secure Https Connection},phishing
+abc.net.au {Don't Know},phishing
+fonts.google.com { Don't Know },malware
+europa.eu {Not Secure Https Connection},phishing
+heise.de {Not Secure Https Connection},phishing
+journals.sagepub.com {Bot Verification Enabled},malware
+zeit.de {Redirection},phishing
+smile.amazon.com {Not Secure Https Connection},phishing
+academic.oup.com {Don't Know},malware
+www8.hp.com {Not Secure Https Conncetion},phishing
+media.giphy.com {Not Secure Https Connection},phishing
+europarl.europa.eu {Not Secure Https Connection},phishing
+get.adobe.com {Not Secure Https Connection},phishing
+onlinelibrary.wiley.com {Not Secure Https Connection},malware
+kstatic.googleusercontent.com {Not Secure Https Connection},phishing
+webdesign.about.com {Not Secure Https Connection},malware
+goo.gle {Redirection},phishing
+docs.wixstatic.com {Not Secure Https Connection},phishing
+rhtlbn.mosgorcredit.ru {Not Secure Https Connection},malware
+db.tt {Not Secure Https Connection},phishing
+google.ch {Not Secure Https Connection},phishing
+esa.int {Not Secure Https Connection},phishing
+g.page {Redirection},phishing
+blockchain.info {Redirection},phishing
+faz.net {Not Secure Https Connection},phishing
+rtve.es {Not Secure Https Connection},phishing
+science.sciencemag.org {Bot Verification Enabled},malware
+otto.de,phishing
+scratch.mit.edu {Don't Know},malware
+g1.globo.com {Not Secure Https Connection},phishing
+stock.adobe.com {Redirection},malware
+presseportal.de  {Don't Know},phishing
+s-media-cache-ak0.pinimg.com {Access Denied},phishing
+idealo.de {Not Secure Https Connection},phishing
+google.pt {Not Secure Https Connection},phishing
+event.on24.com {Access Denied},phishing
+tf1.fr {Not Secure Https Connection},malware
+1.envato.market {Not Secure Https Connection},phishing
+help.apple.com {Redirection},phishing
+ucl.ac.uk {Not Secure Https Connection},phishing
+lh5.ggpht.com {Not Secure Https Connection},phishing
+flow.microsoft.com {Redirection},malware
+privacy.microsoft.com {Redirection},phishing
+online.wsj.com {Redirection},malware
+forms.office.com {Redirection},malware
+us.battle.net {Not Secure Connection},malware
+japantimes.co.jp {Bot Verification Enabled},phishing
+whc.unesco.org {Don't Know},malware
+stadt-bremerhaven.de {Don't Know} - Migrate is installed,phishing
+bild.de {Don't Know},phishing
