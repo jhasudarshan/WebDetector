@@ -7,3 +7,6 @@ beautifulsoup4
 python-whois
 torch
 torch-geometric
+fastapi
+uvicorn[standard]
+pydantic
