@@ -88,7 +88,7 @@ class FullPipeline:
     # -----------------------------
     # Step 3: Feature Extraction
     # -----------------------------
-    def extract_features(self, input_path, output_path, max_workers=7):
+    def extract_features(self, input_path, output_path, max_workers=7, batch_size=20):
         df = pd.read_csv(input_path)
 
         # ── Normalise URLs in-place before any processing ──
@@ -115,28 +115,96 @@ class FullPipeline:
 
         records = [None] * total
 
+        print(f"[extract_features] Processing {total} URLs...")
+
+        # ── RESUME SUPPORT ──
+        processed_urls = set()
+
+        if os.path.exists(output_path):
+            try:
+                existing_df = pd.read_csv(output_path)
+
+                if 'url' in existing_df.columns:
+                    processed_urls = set(existing_df['url'].astype(str))
+
+                print(f"[Resume] Already processed: {len(processed_urls)} rows")
+
+            except Exception as e:
+                print(f"[WARNING] Could not read existing file: {e}")
+
+        # Filter remaining rows
+        df = df[~df['url'].astype(str).isin(processed_urls)]
+
+        if len(df) == 0:
+            print("[Resume] All rows already processed. Skipping.")
+            return
+
+        urls = df['url'].tolist()
+        labels = df['label'].tolist()
+        total = len(urls)
+
+        print(f"[extract_features] Remaining URLs to process: {total}")
+
+        buffer = []
+        processed_count = 0
+
+        # ── Worker function ──
         def process(i, url, label):
             try:
-                features = build_feature_vector(url)   # url is already normalised
+                features = build_feature_vector(url)
                 features['label'] = label
+                features['url'] = url  # IMPORTANT for resume
+
                 with lock:
-                    print(f"[Feature Extraction] Processed row {i}/{total}")
-                return i, features
+                    print(f"[✓] Row {i}/{total}")
+
+                return features
+
             except Exception as e:
                 with lock:
-                    print(f"[ERROR] Row {i} ({url!r}) failed: {e}")
-                return i, {"label": label}
+                    print(f"[✗ ERROR] Row {i} ({url}): {e}")
 
+                return {
+                    "url": url,
+                    "label": label
+                }
+
+        # ── Parallel execution ──
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = {
-                executor.submit(process, i, url, label): i
+            futures = [
+                executor.submit(process, i, url, label)
                 for i, (url, label) in enumerate(zip(urls, labels))
-            }
-            for future in as_completed(futures):
-                i, features = future.result()
-                records[i] = features
+            ]
 
-        pd.DataFrame(records).to_csv(output_path, index=False)
+            for future in as_completed(futures):
+                result = future.result()
+
+                with lock:
+                    buffer.append(result)
+                    processed_count += 1
+
+                    # ── Incremental save ──
+                    if len(buffer) >= batch_size:
+                        pd.DataFrame(buffer).to_csv(
+                            output_path,
+                            mode='a',
+                            header=not os.path.exists(output_path),
+                            index=False
+                        )
+                        print(f"[💾 SAVED] {processed_count}/{total}")
+                        buffer.clear()
+
+            # ── Save remaining ──
+            if buffer:
+                pd.DataFrame(buffer).to_csv(
+                    output_path,
+                    mode='a',
+                    header=not os.path.exists(output_path),
+                    index=False
+                )
+                print(f"[💾 FINAL SAVE] {processed_count}/{total}")
+
+            print("[extract_features] Completed successfully.")
 
     # -----------------------------
     # Step 4: Cleaning Pipeline
@@ -181,7 +249,7 @@ class FullPipeline:
         # self.prepare_data()
 
         print("Step 2: Feature extraction...")
-        self.extract_features("./DemoDataSet/train/train_part_1.csv", "./DemoDataSet/features/train_features_part_1.csv")
+        self.extract_features("./DemoDataSet/train/train_part_2.csv", "./DemoDataSet/features/train_features_part_2.csv")
         # self.extract_features("./DemoDataSet/test/test_part_1.csv",  "./DemoDataSet/features/test_features_part_1.csv")
 
         # print("Step 3: Cleaning...")
